@@ -1,5 +1,6 @@
 package librarysystem;
 
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,7 +47,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 	
 	@Override
 	public void repaint() {
-		updateMenuItems();
+		updateUIByRole();
 		super.repaint();
 	}
      
@@ -65,7 +66,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
     
     private void formatContentPane() {
 		mainPanel = new JPanel();
-		mainPanel.setLayout(new GridLayout(1,1));
+		mainPanel.setLayout(new FlowLayout());
 		getContentPane().add(mainPanel);	
 	}
     
@@ -75,6 +76,9 @@ public class LibrarySystem extends JFrame implements LibWindow {
     }
     
     private void insertSplashImage() {
+    	lbl_Welcome = new JLabel("");
+		mainPanel.add(lbl_Welcome);
+
         ImageIcon image = new ImageIcon(pathToImage);
 		mainPanel.add(new JLabel(image));	
     }
@@ -94,13 +98,14 @@ public class LibrarySystem extends JFrame implements LibWindow {
  	   menuItem_viewAllMembers.addActionListener(new AllMemberIdsListener());
  	   menuItem_Logout.addActionListener(new LogoutListener());
  	   //
- 	   updateMenuItems();
+ 	   updateUIByRole();
     }
     
-    private void updateMenuItems() {
+    private void updateUIByRole() {
     	options.removeAll();
     	Auth auth = ci.getAuthentication();
     	if (auth != null) {
+    		lbl_Welcome.setText("Welcome to RedDragon Library. Please choose options for next action!!!");
     		if (auth.equals(Auth.ADMIN)) {
     			for (JMenuItem item : adminOptions) {
         			options.add(item);
@@ -118,6 +123,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
     		for (JMenuItem item : loginOptions) {
     			options.add(item);
     		}
+    		lbl_Welcome.setText("Please log in");
     	}
     }
     
@@ -223,8 +229,10 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		public void actionPerformed(ActionEvent e) {
 			ci.logout();
 			JOptionPane.showMessageDialog(LibrarySystem.this,"Successful Logout");
-			updateMenuItems();
+			updateUIByRole();
 		}
 		
 	}
+	
+	JLabel lbl_Welcome;
 }
