@@ -61,7 +61,8 @@ public class LoginWindow extends JFrame implements LibWindow {
 	/* This class is a singleton */
     private LoginWindow () {}
     
-    public void init() {     		
+    public void init() {     
+    	if (!isInitialized) {
     		mainPanel = new JPanel();
     		defineUpperHalf();
     		defineMiddleHalf();
@@ -77,8 +78,7 @@ public class LoginWindow extends JFrame implements LibWindow {
     		isInitialized(true);
     		pack();
     		//setSize(660, 500);
-
-    	
+    	}
     }
     private void defineUpperHalf() {
     		
@@ -186,10 +186,13 @@ public class LoginWindow extends JFrame implements LibWindow {
     	private void addLoginButtonListener(JButton butn) {
     		butn.addActionListener(evt -> {
     			try {
-    				LibrarySystem.INSTANCE.ci.login(username.getText(), password.getText());
+    				String user = LoginWindow.this.username.getText();
+    				LibrarySystem.INSTANCE.ci.login(user, password.getText());
         			JOptionPane.showMessageDialog(this,"Successful Login");
         			LibrarySystem.INSTANCE.repaint();
         			LoginWindow.this.backToMain();
+        			username.setText("");
+        			password.setText("");
     			} catch (LoginException e) {
         			JOptionPane.showMessageDialog(this,e.getMessage());
     			}    				

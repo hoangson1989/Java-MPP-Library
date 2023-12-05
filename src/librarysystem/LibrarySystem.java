@@ -36,7 +36,8 @@ public class LibrarySystem extends JFrame implements LibWindow {
     	LibrarySystem.INSTANCE,
 		LoginWindow.INSTANCE,
 		AllMemberIdsWindow.INSTANCE,	
-		AllBookIdsWindow.INSTANCE
+		AllBookIdsWindow.INSTANCE,
+		AddNewMemberWindow.INSTANCE
 	};
     	
 	public static void hideAllWindows() {		
@@ -54,6 +55,9 @@ public class LibrarySystem extends JFrame implements LibWindow {
     private LibrarySystem() {}
     
     public void init() {
+    	if (isInitialized) {
+			return;
+		}
     	formatContentPane();
     	setPathToImage();
     	insertSplashImage();
@@ -97,6 +101,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
  	   menuItem_viewAllBooks.addActionListener(new AllBookIdsListener());
  	   menuItem_viewAllMembers.addActionListener(new AllMemberIdsListener());
  	   menuItem_Logout.addActionListener(new LogoutListener());
+ 	   menuItem_AddNewMember.addActionListener(new AddNewMemberListener());
  	   //
  	   updateUIByRole();
     }
@@ -134,6 +139,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 			LibrarySystem.hideAllWindows();
 			LoginWindow.INSTANCE.init();
 			Util.centerFrameOnDesktop(LoginWindow.INSTANCE);
+			LoginWindow.INSTANCE.pack();
 			LoginWindow.INSTANCE.setVisible(true);
 			
 		}
@@ -223,6 +229,9 @@ public class LibrarySystem extends JFrame implements LibWindow {
 	JMenuItem[] allOptions = {menuItem_Logout, menuItem_AddNewMember, menuItem_AddNewBook, menuItem_viewAllBooks,
 			menuItem_AddNewCopy, menuItem_viewAllMembers, menuItem_viewCheckoutRecord, menuItem_CheckoutBook};
 	
+	JLabel lbl_Welcome;
+
+	// Case 1
 	class LogoutListener implements ActionListener {
 
 		@Override
@@ -234,5 +243,18 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		
 	}
 	
-	JLabel lbl_Welcome;
+	// Case 2
+	class AddNewMemberListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			LibrarySystem.hideAllWindows();
+			AddNewMemberWindow.INSTANCE.init();
+			Util.centerFrameOnDesktop(AddNewMemberWindow.INSTANCE);
+			AddNewMemberWindow.INSTANCE.pack();
+			AddNewMemberWindow.INSTANCE.setVisible(true);
+		}
+		
+	}
+	
 }

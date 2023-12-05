@@ -34,6 +34,9 @@ public class AllBookIdsWindow extends JFrame implements LibWindow {
 	private AllBookIdsWindow() {}
 	
 	public void init() {
+		if (isInitialized) {
+			return;
+		}
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		defineTopPanel();
