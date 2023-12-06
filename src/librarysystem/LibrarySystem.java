@@ -8,6 +8,7 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -38,7 +39,8 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		AllMemberIdsWindow.INSTANCE,	
 		AllBookIdsWindow.INSTANCE,
 		MemberCheckoutReportWindow.INSTANCE,
-		AddNewMemberWindow.INSTANCE
+		AddNewMemberWindow.INSTANCE,
+		OverdueWindow.INSTANCE
 	};
     	
 	public static void hideAllWindows() {		
@@ -104,6 +106,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
  	   menuItem_Logout.addActionListener(new LogoutListener());
  	   menuItem_AddNewMember.addActionListener(new AddNewMemberListener());
  	   menuItem_viewCheckoutRecord.addActionListener(new ViewMemberCheckoutListenr());
+ 	   menuItem_viewOverdue.addActionListener(new OverdueListener());
  	   //
  	   updateUIByRole();
     }
@@ -226,10 +229,10 @@ public class LibrarySystem extends JFrame implements LibWindow {
 	JMenuItem menuItem_viewAllMembers = new JMenuItem("View All Members");
 
 	JMenuItem[] loginOptions = { menuItem_Login };
-	JMenuItem[] librarianOptions = {menuItem_Logout, menuItem_viewAllBooks, menuItem_viewCheckoutRecord, menuItem_CheckoutBook};
+	JMenuItem[] librarianOptions = {menuItem_Logout, menuItem_viewAllBooks, menuItem_viewCheckoutRecord, menuItem_CheckoutBook, menuItem_viewOverdue};
 	JMenuItem[] adminOptions = { menuItem_Logout, menuItem_AddNewMember, menuItem_AddNewBook, menuItem_viewAllBooks , menuItem_AddNewCopy, menuItem_viewAllMembers};
 	JMenuItem[] allOptions = {menuItem_Logout, menuItem_AddNewMember, menuItem_AddNewBook, menuItem_viewAllBooks,
-			menuItem_AddNewCopy, menuItem_viewAllMembers, menuItem_viewCheckoutRecord, menuItem_CheckoutBook};
+			menuItem_AddNewCopy, menuItem_viewAllMembers, menuItem_viewCheckoutRecord, menuItem_CheckoutBook, menuItem_viewOverdue};
 	
 	JLabel lbl_Welcome;
 
@@ -269,6 +272,20 @@ public class LibrarySystem extends JFrame implements LibWindow {
 			Util.centerFrameOnDesktop(MemberCheckoutReportWindow.INSTANCE);
 			MemberCheckoutReportWindow.INSTANCE.pack();
 			MemberCheckoutReportWindow.INSTANCE.setVisible(true);
+		}
+		
+	}
+	
+	// Case Optional 3
+	class OverdueListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			LibrarySystem.hideAllWindows();
+			OverdueWindow.INSTANCE.init();
+			Util.centerFrameOnDesktop(OverdueWindow.INSTANCE);
+			OverdueWindow.INSTANCE.pack();
+			OverdueWindow.INSTANCE.setVisible(true);
 		}
 		
 	}

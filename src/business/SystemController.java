@@ -162,7 +162,7 @@ public class SystemController implements ControllerInterface {
 		return result;
 	}
 	@Override
-	public ArrayList<String[]> getBookOverdueList(String bookIsbn) throws LibrarySystemException {
+	public String[][] getBookOverdueList(String bookIsbn) throws LibrarySystemException {
 		if (bookIsbn == null || bookIsbn.isBlank()) {
             throw new LibrarySystemException("bookIsbn should not be empty");
 		}
@@ -172,17 +172,28 @@ public class SystemController implements ControllerInterface {
 		ArrayList<String[]> overdueList = new ArrayList<String[]>();
 		for(String memberId : members.keySet()) {
 			LibraryMember member = members.get(memberId);
-			ArrayList<CheckoutRecordEntry> records = member.getRecord().getRecords();
-			for (CheckoutRecordEntry entry : records) {
-				BookCopy copy = entry.getBookCopy();
-				Book book = copy.getBook();
-				if (book.getIsbn().equals(bookIsbn) && current.isAfter(entry.getDueDate()) && copy.isAvailable() == false) {
-					//
-					overdueList.add(new String[] {bookIsbn, book.getTitle(), ""+copy.getCopyNum(), entry.getDueDate().toString() });
+			if (member.getRecord() != null) {
+				ArrayList<CheckoutRecordEntry> records = member.getRecord().getRecords();
+				for (CheckoutRecordEntry entry : records) {
+					BookCopy copy = entry.getBookCopy();
+					Book book = copy.getBook();
+					if (book.getIsbn().equals(bookIsbn) && current.isAfter(entry.getDueDate()) && copy.isAvailable() == false) {
+						//
+						overdueList.add(new String[] {bookIsbn, book.getTitle(),
+								""+copy.getCopyNum(),
+								member.getFirstName() + " " + member.getLastName(),
+								entry.getDueDate().toString() });
+					}
 				}
 			}
 		}
-		return overdueList;
+		
+		int s = overdueList.size();
+		String[][] results = new String[s][];
+		for(int i = 0; i < s; i++) {
+			results[i] = overdueList.get(i);
+		}
+		return results;
 	}
 	
 	

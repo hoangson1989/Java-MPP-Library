@@ -35,5 +35,5 @@ public interface ControllerInterface {
     public String getCheckoutRecord(String memberId) throws LibrarySystemException;
     
     // case 7 - Overdue Book Copy
-    public ArrayList<String[]> getBookOverdueList(String bookIsbn) throws LibrarySystemException;
+    public String[][] getBookOverdueList(String bookIsbn) throws LibrarySystemException;
 }

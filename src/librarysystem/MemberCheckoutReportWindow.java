@@ -207,7 +207,7 @@ public class MemberCheckoutReportWindow extends JFrame implements LibWindow {
 	}
 	
 	private void updateBtnSearchVisible() {
-		String txt = tf_MemberId.getText();
+		String txt = tf_MemberId.getText().trim();
 		if (txt != null && txt.isBlank() == false) {
 			btn_Search.setEnabled(true);
 		} else {
