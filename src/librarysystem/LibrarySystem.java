@@ -257,4 +257,17 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		
 	}
 	
+	// Case Optional 2
+	class ViewMemberCheckoutListenr implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			LibrarySystem.hideAllWindows();
+			MemberCheckoutReportWindow.INSTANCE.init();
+			Util.centerFrameOnDesktop(MemberCheckoutReportWindow.INSTANCE);
+			MemberCheckoutReportWindow.INSTANCE.pack();
+			MemberCheckoutReportWindow.INSTANCE.setVisible(true);
+		}
+		
+	}
 }
