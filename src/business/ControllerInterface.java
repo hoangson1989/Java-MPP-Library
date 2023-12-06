@@ -31,9 +31,8 @@ public interface ControllerInterface {
     // case 5 - Add new Book
     public void addNewBook(String bookIsbn, String title, int maxCheckout, List<Author> authors) throws LibrarySystemException;
     
-    
     // case 6 - Print Checkout Record
-    public void printCheckoutRecord(String memberId) throws LibrarySystemException;
+    public String getCheckoutRecord(String memberId) throws LibrarySystemException;
     
     // case 7 - Overdue Book Copy
     public ArrayList<String[]> getBookOverdueList(String bookIsbn) throws LibrarySystemException;

@@ -134,23 +134,32 @@ public class SystemController implements ControllerInterface {
 		 da.saveNewBook(newBook);		
 	}
 	@Override
-	public void printCheckoutRecord(String memberId) throws LibrarySystemException {
-		 DataAccess da = new DataAccessFacade();
-		 LibraryMember member = da.searchMember(memberId);
-		 if (member == null) { 
-			 throw new LibrarySystemException("Member with Id " + memberId + " not exist");
-		 }
-		 ArrayList<CheckoutRecordEntry> records = member.getRecord().getRecords();
+	public String getCheckoutRecord(String memberId) throws LibrarySystemException {
+		String result = "";
+		DataAccess da = new DataAccessFacade();
+		LibraryMember member = da.searchMember(memberId);
+		if (member == null) { 
+			throw new LibrarySystemException("Member with Id " + memberId + " not exist");
+		}
 		 
-		 String leftAlignFormat = "| %-15s | %-10s | %-10s |%n";
-
-		 System.out.format("+-----------------+------------+------------+%n");
-		 System.out.format("|   Book Isbn     | Check Date |  Due Date  |%n");
-		 System.out.format("+-----------------+------------+------------+%n");
-		 for (CheckoutRecordEntry entry : records) {
-			 System.out.format(leftAlignFormat, entry.getBookCopy().getBook().getIsbn(), entry.getCheckoutDate().toString(), entry.getDueDate());
-		 }
-		 System.out.format("+-----------------+------------+------------+%n");
+		CheckoutRecord checkoutRec = member.getRecord();
+		if (checkoutRec != null) {
+			ArrayList<CheckoutRecordEntry> records = checkoutRec.getRecords();
+			 
+			String leftAlignFormat = "| %-15s | %-10s | %-10s |%n";
+			result += "+-----------------+------------+------------+\n";
+			result += 	     "|   Book Isbn     | Check Date |  Due Date  |\n";
+			result +=       "+-----------------+------------+------------+\n";
+			for (CheckoutRecordEntry entry : records) {
+				result += String.format(leftAlignFormat, entry.getBookCopy().getBook().getIsbn(), entry.getCheckoutDate().toString(), entry.getDueDate());
+				result += "\n";
+				result +=       "+-----------------+------------+------------+\n";
+			}
+		} else {
+			result += "No CheckoutRecord found";
+		}
+		
+		return result;
 	}
 	@Override
 	public ArrayList<String[]> getBookOverdueList(String bookIsbn) throws LibrarySystemException {

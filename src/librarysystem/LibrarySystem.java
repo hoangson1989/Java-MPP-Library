@@ -37,6 +37,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		LoginWindow.INSTANCE,
 		AllMemberIdsWindow.INSTANCE,	
 		AllBookIdsWindow.INSTANCE,
+		MemberCheckoutReportWindow.INSTANCE,
 		AddNewMemberWindow.INSTANCE
 	};
     	
@@ -102,6 +103,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
  	   menuItem_viewAllMembers.addActionListener(new AllMemberIdsListener());
  	   menuItem_Logout.addActionListener(new LogoutListener());
  	   menuItem_AddNewMember.addActionListener(new AddNewMemberListener());
+ 	   menuItem_viewCheckoutRecord.addActionListener(new ViewMemberCheckoutListenr());
  	   //
  	   updateUIByRole();
     }
