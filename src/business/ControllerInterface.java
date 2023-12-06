@@ -29,7 +29,7 @@ public interface ControllerInterface {
 	public void addABookCopy(String bookIsbn) throws LibrarySystemException;
     
     // case 5 - Add new Book
-    public void addNewBook(String bookIsbn, String title, int maxCheckout, List<Author> authors) throws LibrarySystemException;
+    public void addNewBook(String bookIsbn, String title, int maxCheckout, List<Author> authors, int copies) throws LibrarySystemException;
     
     // case 6 - Print Checkout Record
     public String getCheckoutRecord(String memberId) throws LibrarySystemException;

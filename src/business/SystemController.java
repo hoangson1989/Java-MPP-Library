@@ -123,7 +123,7 @@ public class SystemController implements ControllerInterface {
 		da.saveNewBook(book);
 	}
 	@Override
-	public void addNewBook(String bookIsbn, String title, int maxCheckout, List<Author> authors)
+	public void addNewBook(String bookIsbn, String title, int maxCheckout, List<Author> authors, int copies)
 			throws LibrarySystemException {
 		 DataAccess da = new DataAccessFacade();
 		 Book newBook = da.searchBook(bookIsbn);
@@ -131,7 +131,10 @@ public class SystemController implements ControllerInterface {
 			 throw new LibrarySystemException("Book with Isbn " + bookIsbn + " exist");
 		 }
 		 newBook = new Book(bookIsbn, title, maxCheckout, authors);
-		 da.saveNewBook(newBook);		
+		 for (int i = 0; i < copies; i++) {
+			 newBook.addCopy();
+		 }
+		 da.saveNewBook(newBook);	
 	}
 	@Override
 	public String getCheckoutRecord(String memberId) throws LibrarySystemException {
