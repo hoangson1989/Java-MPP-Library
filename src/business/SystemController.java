@@ -107,7 +107,9 @@ public class SystemController implements ControllerInterface {
         }
         LocalDate cDate = LocalDate.now();
         LocalDate dDate = cDate.plusDays(book.getMaxCheckoutLength());
-        final CheckoutRecordEntry newEntry = member.getRecord().addNewCheckoutRecordEntry(cDate, dDate, book.getNextAvailableCopy());
+        BookCopy copy = book.getNextAvailableCopy();
+        final CheckoutRecordEntry newEntry = member.getRecord().addNewCheckoutRecordEntry(cDate, dDate, copy);
+        copy.changeAvailability();
         da.saveNewMember(member);
         da.saveNewBook(book);
 		
@@ -161,6 +163,27 @@ public class SystemController implements ControllerInterface {
 			}
 		} else {
 			result += "No CheckoutRecord found";
+		}
+		
+		return result;
+	}
+	@Override
+	public String[][] getCheckoutRecord2(String memberId) throws LibrarySystemException {
+		String[][] result;
+		DataAccess da = new DataAccessFacade();
+		LibraryMember member = da.searchMember(memberId);
+		if (member == null) { 
+			throw new LibrarySystemException("Member with Id " + memberId + " not exist");
+		}
+		 
+		CheckoutRecord checkoutRec = member.getRecord();
+		ArrayList<CheckoutRecordEntry> records = checkoutRec.getRecords();
+		result = new String[records.size()][3];
+		
+		
+		for (int i = 0 ;i < records.size() ; i++) {
+			CheckoutRecordEntry entry = records.get(i);
+			result[i] = new String[] {entry.getBookCopy().getBook().getIsbn(), entry.getCheckoutDate().toString(), entry.getDueDate().toString()};			
 		}
 		
 		return result;
