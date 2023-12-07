@@ -3,11 +3,7 @@ package business;
 import java.util.ArrayList;
 import java.util.List;
 
-import business.Book;
 import dataaccess.Auth;
-import dataaccess.DataAccess;
-import dataaccess.DataAccessFacade;
-import netscape.javascript.JSObject;
 
 public interface ControllerInterface {
 	public void login(String id, String password) throws LoginException;

@@ -9,10 +9,11 @@ import dataaccess.Auth;
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
 import dataaccess.User;
-import netscape.javascript.JSObject;
 
 public class SystemController implements ControllerInterface {
 	public static Auth currentAuth = null;
+	
+	public static final SystemController INSTANCE = new SystemController();
 	
 	public void login(String id, String password) throws LoginException {
 		DataAccess da = new DataAccessFacade();
