@@ -132,8 +132,7 @@ public class SystemController implements ControllerInterface {
 			 throw new LibrarySystemException("Book with Isbn " + bookIsbn + " exist");
 		 }
 		 newBook = new Book(bookIsbn, title, maxCheckout, authors);
-		 // new book already have 1 copy
-		 for (int i = 1; i < copies; i++) {
+		 for (int i = 0; i < copies; i++) {
 			 newBook.addCopy();
 		 }
 		 da.saveNewBook(newBook);	
