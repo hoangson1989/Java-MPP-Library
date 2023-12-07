@@ -30,9 +30,9 @@ public class AddBookCopyWindow extends JFrame implements LibWindow {
         bookIdTextField.setText("");
     }
 
-    private JPanel topPanel;
-    private JPanel middlePanel;
-    private JPanel lowerPanel;
+    private JPanel topPanel = new JPanel();
+    private JPanel middlePanel = new JPanel();
+    private JPanel lowerPanel = new JPanel();
     private final JLabel bookId = new JLabel("Book ISBN:");
     private final JTextField bookIdTextField = new JTextField("");
 
@@ -47,11 +47,18 @@ public class AddBookCopyWindow extends JFrame implements LibWindow {
         if (isInitialized) {
             return;
         }
+        String[] column_names = {"ISBN","Title","Number of Copies"};
+        DefaultTableModel table_model = new DefaultTableModel(column_names, 0);
+        table=new JTable(table_model);
+        middlePanel.add(table.getTableHeader());
+        middlePanel.add(table);
+
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
         defineTopPanel();
         defineMiddlePanel();
         defineLowerPanel();
+
         isInitialized = true;
         this.setTitle("Add Book Copy");
 
@@ -66,12 +73,6 @@ public class AddBookCopyWindow extends JFrame implements LibWindow {
         lowerPanel.add(btnSearch,0);
         lowerPanel.add(addBookCopy,1);
         lowerPanel.add(clearForm,2);
-
-        String[] column_names = {"ISBN","Title","Number of Copies"};
-        DefaultTableModel table_model = new DefaultTableModel(column_names, 0);
-        table=new JTable(table_model);
-        middlePanel.add(table.getTableHeader());
-        middlePanel.add(table);
 
         mainPanel.add(topPanel, BorderLayout.NORTH);
         mainPanel.add(middlePanel, BorderLayout.CENTER);
@@ -152,7 +153,6 @@ public class AddBookCopyWindow extends JFrame implements LibWindow {
     }
 
     public void defineMiddlePanel() {
-        middlePanel = new JPanel();
         middlePanel.setLayout(new GridLayout(4,1));
     }
 
