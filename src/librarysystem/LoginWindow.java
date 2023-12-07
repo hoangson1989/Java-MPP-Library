@@ -186,13 +186,15 @@ public class LoginWindow extends JFrame implements LibWindow {
     	private void addLoginButtonListener(JButton butn) {
     		butn.addActionListener(evt -> {
     			try {
-    				String user = LoginWindow.this.username.getText();
-    				LibrarySystem.INSTANCE.ci.login(user, password.getText());
-        			JOptionPane.showMessageDialog(this,"Successful Login");
-        			LibrarySystem.INSTANCE.repaint();
-        			LoginWindow.this.backToMain();
-        			username.setText("");
-        			password.setText("");
+    				if (this.myValidation()) {
+    					String user = LoginWindow.this.username.getText();
+        				LibrarySystem.INSTANCE.ci.login(user, password.getText());
+            			JOptionPane.showMessageDialog(this,"Successful Login");
+            			LibrarySystem.INSTANCE.repaint();
+            			LoginWindow.this.backToMain();
+            			username.setText("");
+            			password.setText("");
+    				}
     			} catch (LoginException e) {
         			JOptionPane.showMessageDialog(this,e.getMessage());
     			}    				
@@ -202,6 +204,18 @@ public class LoginWindow extends JFrame implements LibWindow {
         private void backToMain() {
         	LibrarySystem.hideAllWindows();
 			LibrarySystem.INSTANCE.setVisible(true);
+        }
+        
+        private boolean myValidation() throws LoginException {
+        	String user = username.getText();
+        	String pass = password.getText();
+        	if (user.isEmpty()) {
+        		throw new LoginException("User could not be empty!");
+        	}
+        	if(pass.isEmpty()) {
+        		throw new LoginException("password could not be empty!");
+        	}
+        	return true;
         }
     
 }
