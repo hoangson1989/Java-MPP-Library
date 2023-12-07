@@ -158,13 +158,12 @@ public class SystemController implements ControllerInterface {
 			result +=       "+-----------------+------------+------------+\n";
 			for (CheckoutRecordEntry entry : records) {
 				result += String.format(leftAlignFormat, entry.getBookCopy().getBook().getIsbn(), entry.getCheckoutDate().toString(), entry.getDueDate());
-				result += "\n";
 				result +=       "+-----------------+------------+------------+\n";
 			}
 		} else {
 			result += "No CheckoutRecord found";
 		}
-		
+		System.out.println(result);
 		return result;
 	}
 	@Override
