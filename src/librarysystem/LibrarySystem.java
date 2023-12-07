@@ -42,8 +42,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		AddNewMemberWindow.INSTANCE,
 		OverdueWindow.INSTANCE,
 		AddNewBook.INSTANCE,
-		AddCheckoutBook.INSTANCE,
-        AddBookCopyWindow.INSTANCE
+		AddCheckoutBook.INSTANCE
 	};
     	
 	public static void hideAllWindows() {		
@@ -111,8 +110,8 @@ public class LibrarySystem extends JFrame implements LibWindow {
  	   menuItem_viewCheckoutRecord.addActionListener(new ViewMemberCheckoutListenr());
  	   menuItem_viewOverdue.addActionListener(new OverdueListener());
  	   menuItem_AddNewBook.addActionListener(new AddNewBookListener());
+     menuItem_AddNewCopy.addActionListener(new AddNewCopyBookListener());
  	   menuItem_CheckoutBook.addActionListener(new AddCheckoutBookListener());
-		menuItem_AddNewCopy.addActionListener(new AddNewCopyBookListener());
  	   //
  	   updateUIByRole();
     }
@@ -289,9 +288,9 @@ public class LibrarySystem extends JFrame implements LibWindow {
 			AddCheckoutBook.INSTANCE.pack();
 			AddCheckoutBook.INSTANCE.setVisible(true);
 		}
-
+		
 	}
-
+	
 	// Case Optional 1
 	class AddNewBookListener implements ActionListener {
 

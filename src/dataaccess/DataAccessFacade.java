@@ -14,7 +14,6 @@ import business.Book;
 import business.LibraryMember;
 import business.LibrarySystemException;
 
-
 public class DataAccessFacade implements DataAccess {
 	
 	enum StorageType {
@@ -63,7 +62,7 @@ public class DataAccessFacade implements DataAccess {
 		//Returns a Map with Book Isbn/num pairs being
 		return (HashMap<String, Integer>)readFromStorage(StorageType.BOOKCOPYS);
 	}
-
+	
 	
 	/////load methods - these place test data into the storage area
 	///// - used just once at startup  
