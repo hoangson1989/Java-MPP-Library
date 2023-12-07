@@ -5,7 +5,6 @@ import java.awt.*;
 import business.Book;
 import business.ControllerInterface;
 import business.LibrarySystemException;
-import business.SystemController;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,7 +12,9 @@ import javax.swing.table.DefaultTableModel;
 
 public class AddBookCopyWindow extends JFrame implements LibWindow {
 
-    public static final AddBookCopyWindow INSTANCE = new AddBookCopyWindow();
+    private static final long serialVersionUID = 7991556415331613917L;
+
+	public static final AddBookCopyWindow INSTANCE = new AddBookCopyWindow();
 
     private boolean isInitialized = false;
 

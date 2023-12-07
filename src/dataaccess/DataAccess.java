@@ -14,5 +14,4 @@ public interface DataAccess {
 	public void saveNewMember(LibraryMember member) throws LibrarySystemException; 
 	public Book searchBook(String bookIsbn) throws LibrarySystemException;
 	public void saveNewBook(Book book) throws LibrarySystemException;
-	void saveBookCopy(String bookIdsn, int number) throws LibrarySystemException;
 }
