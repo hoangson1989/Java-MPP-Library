@@ -12,7 +12,9 @@ import javax.swing.table.DefaultTableModel;
 
 public class AddBookCopyWindow extends JFrame implements LibWindow {
 
-    public static final AddBookCopyWindow INSTANCE = new AddBookCopyWindow();
+    private static final long serialVersionUID = 7991556415331613917L;
+
+	public static final AddBookCopyWindow INSTANCE = new AddBookCopyWindow();
 
     private boolean isInitialized = false;
 
@@ -164,19 +166,20 @@ public class AddBookCopyWindow extends JFrame implements LibWindow {
             LibrarySystem.hideAllWindows();
             LibrarySystem.INSTANCE.setVisible(true);
             AddBookCopyWindow.INSTANCE.setVisible(false);
+            //
+            clearAllTextFields();
+            //
+            DefaultTableModel table_model = (DefaultTableModel) table.getModel();
+        	//
+        	if (table_model.getRowCount() > 0) {
+        	    for (int i = table_model.getRowCount() - 1; i > -1; i--) {
+        	    	table_model.removeRow(i);
+        	    }
+        	}
         });
         lowerPanel = new JPanel();
         lowerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));;
         lowerPanel.add(backToMainButn);
-        clearAllTextFields();
-        //
-        DefaultTableModel table_model = (DefaultTableModel) table.getModel();
-    	//
-    	if (table_model.getRowCount() > 0) {
-    	    for (int i = table_model.getRowCount() - 1; i > -1; i--) {
-    	    	table_model.removeRow(i);
-    	    }
-    	}
     }
 
 }
