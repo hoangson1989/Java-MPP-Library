@@ -33,6 +33,7 @@ public interface ControllerInterface {
     
     // case 6 - Print Checkout Record
     public String getCheckoutRecord(String memberId) throws LibrarySystemException;
+    public String[][] getCheckoutRecord2(String memberId) throws LibrarySystemException;
     
     // case 7 - Overdue Book Copy
     public String[][] getBookOverdueList(String bookIsbn) throws LibrarySystemException;
