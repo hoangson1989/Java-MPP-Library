@@ -5,7 +5,6 @@ import java.util.HashMap;
 import business.Book;
 import business.LibraryMember;
 import business.LibrarySystemException;
-import dataaccess.DataAccessFacade.StorageType;
 
 public interface DataAccess { 
 	public HashMap<String,Book> readBooksMap();
@@ -15,4 +14,5 @@ public interface DataAccess {
 	public void saveNewMember(LibraryMember member) throws LibrarySystemException; 
 	public Book searchBook(String bookIsbn) throws LibrarySystemException;
 	public void saveNewBook(Book book) throws LibrarySystemException;
+	void saveBookCopy(String bookIdsn, int number) throws LibrarySystemException;
 }

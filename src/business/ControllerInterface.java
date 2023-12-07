@@ -23,8 +23,11 @@ public interface ControllerInterface {
 
 	// case 4 - Add a Book Copy
 	public void addABookCopy(String bookIsbn) throws LibrarySystemException;
-    
-    // case 5 - Add new Book
+	Book getBookById(String bookIsbn) throws LibrarySystemException;
+	List<Book> getAllBooks();
+	void addBookCopy(String bookId, int copyNum) throws LibrarySystemException;
+
+	// case 5 - Add new Book
     public void addNewBook(String bookIsbn, String title, int maxCheckout, List<Author> authors, int copies) throws LibrarySystemException;
     
     // case 6 - Print Checkout Record
@@ -33,4 +36,6 @@ public interface ControllerInterface {
     
     // case 7 - Overdue Book Copy
     public String[][] getBookOverdueList(String bookIsbn) throws LibrarySystemException;
+
+
 }

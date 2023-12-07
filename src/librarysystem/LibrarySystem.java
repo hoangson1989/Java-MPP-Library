@@ -110,6 +110,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
  	   menuItem_viewCheckoutRecord.addActionListener(new ViewMemberCheckoutListenr());
  	   menuItem_viewOverdue.addActionListener(new OverdueListener());
  	   menuItem_AddNewBook.addActionListener(new AddNewBookListener());
+     menuItem_AddNewCopy.addActionListener(new AddNewCopyBookListener());
  	   menuItem_CheckoutBook.addActionListener(new AddCheckoutBookListener());
  	   //
  	   updateUIByRole();
@@ -208,6 +209,16 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		}
     	
     }
+
+	class AddNewCopyBookListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			LibrarySystem.hideAllWindows();
+			AddBookCopyWindow.INSTANCE.init();
+			AddBookCopyWindow.INSTANCE.pack();
+			AddBookCopyWindow.INSTANCE.setVisible(true);
+		}
+	}
 
 	@Override
 	public boolean isInitialized() {

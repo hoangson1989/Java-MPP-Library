@@ -54,7 +54,26 @@ public class SystemController implements ControllerInterface {
 		retval.addAll(da.readBooksMap().keySet());
 		return retval;
 	}
-	
+
+	@Override
+	public List<Book> getAllBooks() {
+		DataAccess da = new DataAccessFacade();
+		List<Book> retval = new ArrayList<>();
+		retval.addAll(da.readBooksMap().values());
+		return retval;
+	}
+
+	@Override
+	public Book getBookById(String bookIsbn) throws LibrarySystemException {
+		DataAccess da = new DataAccessFacade();
+		return da.searchBook(bookIsbn);
+	}
+
+	public void addBookCopy(String bookIsbn, int copyNum) throws LibrarySystemException {
+		DataAccess da = new DataAccessFacade();
+		da.saveBookCopy(bookIsbn,copyNum);
+	}
+
 	@Override
 	public LibraryMember searchMember(String memberId) throws LibrarySystemException {
 		DataAccess da = new DataAccessFacade();
