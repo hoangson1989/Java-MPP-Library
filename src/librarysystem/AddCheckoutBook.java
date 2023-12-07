@@ -33,7 +33,7 @@ public class AddCheckoutBook extends JFrame implements LibWindow {
 	@Override
 	public void init() {
 		if (isInit == false) {
-			
+			this.setLocation(250, 250);
 			mainPanel = new JPanel();
 			mainPanel.setLayout(new BorderLayout());
 			// 1

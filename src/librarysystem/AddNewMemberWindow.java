@@ -33,6 +33,7 @@ public class AddNewMemberWindow extends JFrame implements LibWindow {
 		if (isInitialized) {
 			return;
 		}
+		this.setLocation(250, 250);
 		JPanel mainPanel = new JPanel();
 		BorderLayout bl = new BorderLayout();
 		mainPanel.setLayout(bl);

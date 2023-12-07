@@ -33,6 +33,7 @@ public class AddNewBook extends JFrame implements LibWindow {
 	@Override
 	public void init() {
 		if (isInit == false) {
+			this.setLocation(250, 250);
 			TestData data = new TestData();
 			List<Author> authors = data.allAuthors;
 			

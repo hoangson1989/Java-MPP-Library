@@ -5,7 +5,6 @@ import java.awt.*;
 import business.Book;
 import business.ControllerInterface;
 import business.LibrarySystemException;
-import business.SystemController;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -47,6 +46,8 @@ public class AddBookCopyWindow extends JFrame implements LibWindow {
         if (isInitialized) {
             return;
         }
+
+        this.setLocation(250, 250);
         String[] column_names = {"ISBN","Title","Number of Copies"};
         DefaultTableModel table_model = new DefaultTableModel(column_names, 0);
         table=new JTable(table_model);
