@@ -9,10 +9,11 @@ import dataaccess.Auth;
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
 import dataaccess.User;
-import netscape.javascript.JSObject;
 
 public class SystemController implements ControllerInterface {
 	public static Auth currentAuth = null;
+	
+	public static final SystemController INSTANCE = new SystemController();
 	
 	public void login(String id, String password) throws LoginException {
 		DataAccess da = new DataAccessFacade();
@@ -125,7 +126,9 @@ public class SystemController implements ControllerInterface {
         }
         LocalDate cDate = LocalDate.now();
         LocalDate dDate = cDate.plusDays(book.getMaxCheckoutLength());
-        final CheckoutRecordEntry newEntry = member.getRecord().addNewCheckoutRecordEntry(cDate, dDate, book.getNextAvailableCopy());
+        BookCopy copy = book.getNextAvailableCopy();
+        final CheckoutRecordEntry newEntry = member.getRecord().addNewCheckoutRecordEntry(cDate, dDate, copy);
+        copy.changeAvailability();
         da.saveNewMember(member);
         da.saveNewBook(book);
 		
@@ -150,8 +153,7 @@ public class SystemController implements ControllerInterface {
 			 throw new LibrarySystemException("Book with Isbn " + bookIsbn + " exist");
 		 }
 		 newBook = new Book(bookIsbn, title, maxCheckout, authors);
-		 // new book already have 1 copy
-		 for (int i = 1; i < copies; i++) {
+		 for (int i = 0; i < copies; i++) {
 			 newBook.addCopy();
 		 }
 		 da.saveNewBook(newBook);	
@@ -175,11 +177,31 @@ public class SystemController implements ControllerInterface {
 			result +=       "+-----------------+------------+------------+\n";
 			for (CheckoutRecordEntry entry : records) {
 				result += String.format(leftAlignFormat, entry.getBookCopy().getBook().getIsbn(), entry.getCheckoutDate().toString(), entry.getDueDate());
-				result += "\n";
 				result +=       "+-----------------+------------+------------+\n";
 			}
 		} else {
 			result += "No CheckoutRecord found";
+		}
+		System.out.println(result);
+		return result;
+	}
+	@Override
+	public String[][] getCheckoutRecord2(String memberId) throws LibrarySystemException {
+		String[][] result;
+		DataAccess da = new DataAccessFacade();
+		LibraryMember member = da.searchMember(memberId);
+		if (member == null) { 
+			throw new LibrarySystemException("Member with Id " + memberId + " not exist");
+		}
+		 
+		CheckoutRecord checkoutRec = member.getRecord();
+		ArrayList<CheckoutRecordEntry> records = checkoutRec.getRecords();
+		result = new String[records.size()][3];
+		
+		
+		for (int i = 0 ;i < records.size() ; i++) {
+			CheckoutRecordEntry entry = records.get(i);
+			result[i] = new String[] {entry.getBookCopy().getBook().getIsbn(), entry.getCheckoutDate().toString(), entry.getDueDate().toString()};			
 		}
 		
 		return result;
