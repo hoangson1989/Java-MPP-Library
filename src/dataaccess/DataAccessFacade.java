@@ -11,16 +11,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import business.Book;
-import business.BookCopy;
 import business.LibraryMember;
 import business.LibrarySystemException;
-import dataaccess.DataAccessFacade.StorageType;
 
 
 public class DataAccessFacade implements DataAccess {
 	
 	enum StorageType {
-		BOOKS, MEMBERS, USERS;
+		BOOKS, BOOKCOPYS, MEMBERS, USERS;
 	}
 	
 	public static final String OUTPUT_DIR = System.getProperty("user.dir") 
@@ -59,6 +57,11 @@ public class DataAccessFacade implements DataAccess {
 		//Returns a Map with name/value pairs being
 		//   userId -> User
 		return (HashMap<String, User>)readFromStorage(StorageType.USERS);
+	}
+
+	public HashMap<String, Integer> readBookCopyMap() {
+		//Returns a Map with Book Isbn/num pairs being
+		return (HashMap<String, Integer>)readFromStorage(StorageType.BOOKCOPYS);
 	}
 	
 	
@@ -179,4 +182,20 @@ public class DataAccessFacade implements DataAccess {
         books.put(book.getIsbn(), book);
         saveToStorage(StorageType.BOOKS, books);
 	}
+
+	@Override
+	public void saveBookCopy(String isbn, int copyNum) throws LibrarySystemException {
+		if (isbn.isBlank()) {
+			throw new LibrarySystemException("book isbn should be not null");
+		}
+		HashMap<String, Integer> bookCopies = this.readBookCopyMap();
+		if(bookCopies.containsKey(isbn)){
+			bookCopies.put(isbn, bookCopies.get(isbn) + copyNum);
+		} else {
+			bookCopies.put(isbn, copyNum);
+		}
+		saveToStorage(StorageType.BOOKCOPYS, bookCopies);
+	}
+
+
 }
