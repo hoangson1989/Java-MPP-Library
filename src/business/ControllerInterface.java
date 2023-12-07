@@ -3,11 +3,7 @@ package business;
 import java.util.ArrayList;
 import java.util.List;
 
-import business.Book;
 import dataaccess.Auth;
-import dataaccess.DataAccess;
-import dataaccess.DataAccessFacade;
-import netscape.javascript.JSObject;
 
 public interface ControllerInterface {
 	public void login(String id, String password) throws LoginException;
@@ -36,6 +32,7 @@ public interface ControllerInterface {
     
     // case 6 - Print Checkout Record
     public String getCheckoutRecord(String memberId) throws LibrarySystemException;
+    public String[][] getCheckoutRecord2(String memberId) throws LibrarySystemException;
     
     // case 7 - Overdue Book Copy
     public String[][] getBookOverdueList(String bookIsbn) throws LibrarySystemException;

@@ -63,7 +63,7 @@ public class DataAccessFacade implements DataAccess {
 		//Returns a Map with Book Isbn/num pairs being
 		return (HashMap<String, Integer>)readFromStorage(StorageType.BOOKCOPYS);
 	}
-	
+
 	
 	/////load methods - these place test data into the storage area
 	///// - used just once at startup  
