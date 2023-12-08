@@ -16,6 +16,8 @@ import business.LibrarySystemException;
 
 public class DataAccessFacade implements DataAccess {
 	
+	public static final DataAccessFacade INSTANCE = new DataAccessFacade();
+	
 	enum StorageType {
 		BOOKS, MEMBERS, USERS;
 	}
