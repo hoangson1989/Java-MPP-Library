@@ -147,30 +147,27 @@ public class AddCheckoutBook extends JFrame implements LibWindow {
 	}
 	
 	private void updateTable(String[][] data) {
+		// remove
+		if (tbScroll != null) {
+			mainPanel.remove(tbScroll);
+			tbScroll = null;
+			tblTable = null;
+		}
+		
 		if (data != null) {
 			// add
-			if (tbScroll == null) {
-				// Column Names
-		        String[] columnNames = { "ISBN", "Checkout Date", "Due Date"};
-		        // Initializing the JTable
-		        tblTable = new JTable(data, columnNames);
-		        tblTable.setBounds(30, 40, 200, 300);
-		 
-		        // adding it to JScrollPane
-		        tbScroll = new JScrollPane(tblTable);
-		        mainPanel.add(tbScroll);
-		        		        
-			}
-	        
-	        
-		} else {
-			// remove
-			if (tbScroll != null) {
-				mainPanel.remove(tbScroll);
-				tbScroll = null;
-				tblTable = null;
-			}
-		}
+			
+			// Column Names
+	        String[] columnNames = { "ISBN", "Checkout Date", "Due Date"};
+	        // Initializing the JTable
+	        tblTable = new JTable(data, columnNames);
+	        tblTable.setBounds(30, 40, 200, 300);
+	 
+	        // adding it to JScrollPane
+	        tbScroll = new JScrollPane(tblTable);
+	        mainPanel.add(tbScroll);
+		} 
+		//
 		pack();
 		AddCheckoutBook.this.getContentPane().validate();
 		AddCheckoutBook.this.getContentPane().repaint();
