@@ -7,12 +7,14 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import business.Author;
@@ -26,9 +28,10 @@ public class AddNewBook extends JFrame implements LibWindow {
 	private boolean isInit;
 	private JTextField tf_BookIsbn;
 	private JTextField tf_Title;
-	private JTextField tf_MaxCheckout;
 	private JTextField tf_Copies;
 	private List<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
+	private ButtonGroup dayGroup;
+	private int maxCheckoutLength;
 	
 	@Override
 	public void init() {
@@ -81,14 +84,34 @@ public class AddNewBook extends JFrame implements LibWindow {
 			{
 				JPanel rowPanel = new JPanel();
 				rowPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-				JLabel lbl = new JLabel();
-				lbl.setText("Max Checkout Length");
-				rowPanel.add(lbl);
-				JTextField tf = new JTextField(10);
-				rowPanel.add(tf);
+				
+				JPanel pnl = new JPanel();
+				pnl.setLayout(new GridLayout(1,3));
+				rowPanel.add(pnl);
+				
+				pnl.add(new JLabel("Max Checkout length    "));
+				
+				JRadioButton rb1 = new JRadioButton("7 Days");
+				rb1.addActionListener(e -> {
+					maxCheckoutLength = 7;
+				});
+				pnl.add(rb1);
+				
+				maxCheckoutLength = 21;
+				JRadioButton rb2 = new JRadioButton("21 Days");
+				rb2.addActionListener(e -> {
+					maxCheckoutLength = 21;
+				});
+				rb2.setSelected(true);
+				pnl.add(rb2);
+				
+				ButtonGroup options = new ButtonGroup();
+				options.add(rb1);
+				options.add(rb2);
+				
 				formPanel.add(rowPanel);
 				
-				this.tf_MaxCheckout = tf;
+				this.dayGroup = options;
 			}
 			
 			//2.4 Copy
@@ -132,8 +155,7 @@ public class AddNewBook extends JFrame implements LibWindow {
 				rowBtns.setLayout(new FlowLayout(FlowLayout.CENTER));
 				JButton btnAdd = new JButton(" Add ");
 				btnAdd.addActionListener(evt -> {
-					try {
-						int max = Integer.parseInt(tf_MaxCheckout.getText().trim());
+					try {						
 						int copies = Integer.parseInt(tf_Copies.getText().trim());
 						String isbn = tf_BookIsbn.getText().trim();
 						String title = tf_Title.getText().trim();
@@ -144,7 +166,7 @@ public class AddNewBook extends JFrame implements LibWindow {
 								lists.add(authors.get(i));
 							}
 						}
-						LibrarySystem.INSTANCE.ci.addNewBook(isbn, title, max, lists, copies);
+						LibrarySystem.INSTANCE.ci.addNewBook(isbn, title, maxCheckoutLength, lists, copies);
 						JOptionPane.showMessageDialog(AddNewBook.this, "Successful Add New Book");
 						LibrarySystem.INSTANCE.repaint();
 						AddNewBook.this.backToMain();
@@ -194,7 +216,6 @@ public class AddNewBook extends JFrame implements LibWindow {
 		tf_BookIsbn.setText("");
 		tf_Title.setText("");
 		tf_Copies.setText("");
-		tf_MaxCheckout.setText("");
 	}
 	
 	private void backToMain() {
